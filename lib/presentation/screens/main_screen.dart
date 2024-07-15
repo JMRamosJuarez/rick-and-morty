@@ -37,7 +37,9 @@ class MainScreen extends StatelessWidget {
 
       final id = int.parse(params['characterId'] ?? '1');
 
-      Navigator.of(context).pushNamed('/character', arguments: id);
+      Navigator.of(context).pushNamedAndRemoveUntil('/character', (route) {
+        return route.settings.name == '/';
+      }, arguments: id);
     });
     return Scaffold(
         body: SafeArea(
