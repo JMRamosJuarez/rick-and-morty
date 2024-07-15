@@ -56,10 +56,11 @@ class CharacterDetailScreen extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.network(
-                      state.character.image,
-                      width: 80,
-                      height: 80,
+                    CircleAvatar(
+                      radius: 80,
+                      backgroundImage: NetworkImage(
+                        state.character.image,
+                      ),
                     ),
                     Container(
                         margin: const EdgeInsets.all(8),

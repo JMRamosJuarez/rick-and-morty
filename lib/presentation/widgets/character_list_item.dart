@@ -19,10 +19,11 @@ class CharacterListItem extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
-            Image.network(
-              item.image,
-              width: 80,
-              height: 80,
+            CircleAvatar(
+              radius: 40,
+              backgroundImage: NetworkImage(
+                item.image,
+              ),
             ),
             Container(margin: const EdgeInsets.all(8), child: Text(item.name))
           ],

@@ -25,7 +25,7 @@ class MostRecentCharacters extends StatelessWidget {
                   );
                 }
                 return SizedBox(
-                  height: 40,
+                  height: 80,
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: state.characters.length,
@@ -48,7 +48,7 @@ class MostRecentCharacters extends StatelessWidget {
               default:
                 //Return placeholder text by default
                 return const SizedBox(
-                  height: 40,
+                  height: 80,
                   child: Center(child: Text('You have 0 recent characters')),
                 );
             }

@@ -19,10 +19,11 @@ class MostRecentCharacterItem extends StatelessWidget {
       onLongPress: () => onDelete(character),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Image.network(
-          character.image,
-          width: 40,
-          height: 40,
+        child: CircleAvatar(
+          radius: 20,
+          backgroundImage: NetworkImage(
+            character.image,
+          ),
         ),
       ),
     );
