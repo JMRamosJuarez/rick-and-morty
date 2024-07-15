@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:rick_and_morty/presentation/blocs/details/character_details_bloc.dart';
 import 'package:rick_and_morty/presentation/blocs/most_recent_characters/most_recent_characters_bloc.dart';
 import 'package:rick_and_morty/presentation/di/index.dart';
@@ -73,7 +74,29 @@ class CharacterDetailScreen extends StatelessWidget {
                     Container(
                         margin: const EdgeInsets.all(8),
                         child: Text(
-                            "Location: ${state.character.location?.name ?? 'Unknown'}"))
+                            "Location: ${state.character.location?.name ?? 'Unknown'}")),
+                    TextButton(
+                        onPressed: () async {
+                          await HomeWidget.saveWidgetData(
+                              "id", state.character.id);
+                          await HomeWidget.renderFlutterWidget(
+                              Image.network(
+                                state.character.image,
+                                width: 40,
+                                height: 40,
+                              ),
+                              key: 'image',
+                              logicalSize: const Size(40, 40));
+                          await HomeWidget.saveWidgetData(
+                              "name", state.character.name);
+                          HomeWidget.requestPinWidget(
+                            name: 'CharacterWidget',
+                            androidName: 'CharacterWidget',
+                            qualifiedAndroidName:
+                                'com.example.rick_and_morty.CharacterWidget',
+                          );
+                        },
+                        child: const Text("Set as home widget"))
                   ],
                 );
             }

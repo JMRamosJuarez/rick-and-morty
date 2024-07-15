@@ -66,16 +66,6 @@ class MainScreen extends StatelessWidget {
                         return CharacterListItem(
                           item: item,
                           onPress: (character) {
-                            HomeWidget.saveWidgetData("id", item.id);
-                            HomeWidget.renderFlutterWidget(
-                                Image.network(
-                                  item.image,
-                                  width: 40,
-                                  height: 40,
-                                ),
-                                key: 'image',
-                                logicalSize: const Size(40, 40));
-                            HomeWidget.saveWidgetData("name", item.name);
                             Navigator.of(context)
                                 .pushNamed('/character', arguments: item.id);
                           },
