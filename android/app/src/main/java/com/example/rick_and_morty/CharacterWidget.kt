@@ -57,6 +57,8 @@ internal fun updateAppWidget(
     if (imageExists) {
         val image: Bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
         views.setImageViewBitmap(R.id.widget_image, image)
+    } else {
+        views.setImageViewResource(R.id.widget_image, R.drawable.rick)
     }
     val pendingIntentWithData = HomeWidgetLaunchIntent.getActivity(
         context,
