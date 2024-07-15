@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_widget/home_widget.dart';
@@ -8,9 +10,12 @@ import 'package:rick_and_morty/presentation/widgets/character_list_item.dart';
 import 'package:rick_and_morty/presentation/widgets/most_recent_characters.dart';
 import 'package:rick_and_morty/presentation/widgets/search_character_text_field.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
+  /// Returns [PageRouteBuilder] that contains [BlocProvider<CharactersBloc>] >> [MainScreen]
+  ///
+  /// The [transitionsBuilder] method returns a [FadeTransition] for the screen.
   static PageRouteBuilder<MainScreen> buildScreen(RouteSettings settings) {
     return PageRouteBuilder(
         pageBuilder: (_, __, ___) {
@@ -31,16 +36,39 @@ class MainScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    HomeWidget.widgetClicked.listen((Uri? uri) {
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  StreamSubscription? _homeWidgetSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    //Subscribe to the home widgets click events
+    _homeWidgetSubscription = HomeWidget.widgetClicked.listen((Uri? uri) {
       final params = uri?.queryParameters ?? {};
 
       final id = int.parse(params['characterId'] ?? '1');
 
+      // Use the [pushNamedAndRemoveUntil] method to prevent
+      // the '/character' screen stack indefinitely above each other
       Navigator.of(context).pushNamedAndRemoveUntil('/character', (route) {
         return route.settings.name == '/';
       }, arguments: id);
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    //Dispose the _homeWidgetSubscription
+    _homeWidgetSubscription?.cancel();
+    _homeWidgetSubscription = null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
       child: BlocSelector<CharactersBloc, PaginationState, List<Character>>(
