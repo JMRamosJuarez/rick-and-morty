@@ -11,6 +11,7 @@ import 'package:rick_and_morty/domain/di/components/rick_and_morty_component.dar
 import 'package:rick_and_morty/domain/di/modules/rick_and_morty_module.dart';
 import 'package:rick_and_morty/presentation/blocs/characters/characters_bloc.dart';
 import 'package:rick_and_morty/presentation/blocs/details/character_details_bloc.dart';
+import 'package:rick_and_morty/presentation/blocs/most_recent_characters/most_recent_characters_bloc.dart';
 import 'package:sqflite/sqflite.dart';
 
 final serviceProvider = GetIt.instance;
@@ -46,6 +47,9 @@ void initDependencies() {
 
   serviceProvider.registerLazySingleton<RickAndMortyComponent>(
       () => RickAndMortyComponentImpl(module: serviceProvider()));
+
+  serviceProvider.registerFactory<MostRecentCharactersBloc>(
+      () => MostRecentCharactersBloc(rickAndMortyComponent: serviceProvider()));
 
   serviceProvider.registerFactory<CharactersBloc>(
       () => CharactersBloc(rickAndMortyComponent: serviceProvider()));

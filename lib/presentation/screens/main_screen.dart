@@ -4,6 +4,7 @@ import 'package:rick_and_morty/domain/entities/character.dart';
 import 'package:rick_and_morty/presentation/blocs/characters/characters_bloc.dart';
 import 'package:rick_and_morty/presentation/di/index.dart';
 import 'package:rick_and_morty/presentation/widgets/character_list_item.dart';
+import 'package:rick_and_morty/presentation/widgets/most_recent_characters.dart';
 import 'package:rick_and_morty/presentation/widgets/search_character_text_field.dart';
 
 class MainScreen extends StatelessWidget {
@@ -37,6 +38,7 @@ class MainScreen extends StatelessWidget {
           return Column(
             children: [
               const SearchCharacterTextField(),
+              const MostRecentCharacters(),
               Expanded(
                 child: NotificationListener<ScrollNotification>(
                   onNotification: (scrollInfo) {

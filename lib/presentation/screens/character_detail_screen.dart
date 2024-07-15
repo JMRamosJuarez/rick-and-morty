@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty/presentation/blocs/details/character_details_bloc.dart';
+import 'package:rick_and_morty/presentation/blocs/most_recent_characters/most_recent_characters_bloc.dart';
 import 'package:rick_and_morty/presentation/di/index.dart';
+import 'package:rick_and_morty/presentation/widgets/most_recent_characters.dart';
 
 class CharacterDetailScreen extends StatelessWidget {
   const CharacterDetailScreen({super.key});
@@ -28,9 +30,16 @@ class CharacterDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: Center(
-        child: BlocBuilder<CharacterDetailsBloc, CharacterDetailsState>(
-          builder: (context, state) {
+      body: SafeArea(
+          child: Center(
+        child: BlocConsumer<CharacterDetailsBloc, CharacterDetailsState>(
+          listener: (_, state) {
+            if (state is CharacterSuccess) {
+              final bloc = context.read<MostRecentCharactersBloc>();
+              bloc.add(GetMostRecentCharactersEvent(limit: 10));
+            }
+          },
+          builder: (_, state) {
             switch (state) {
               case CharacterWaiting():
               case CharacterLoading():
