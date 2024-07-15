@@ -11,6 +11,7 @@
         android:layout_margin="8dp"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:src="@drawable/rick"
         android:layout_centerVertical="true" />
 
     <TextView
@@ -22,5 +23,6 @@
         android:layout_toEndOf="@id/widget_image"
         android:layout_margin="8dp"
         android:textSize="24sp"
+        android:text="Rick Sanchez"
         android:textStyle="bold|italic" />
 </RelativeLayout>
