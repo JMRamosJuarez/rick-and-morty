@@ -11,20 +11,23 @@ import 'package:rick_and_morty/presentation/widgets/search_character_text_field.
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
-  static PageRouteBuilder<MainScreen> buildScreen(RouteSettings route) {
-    return PageRouteBuilder(pageBuilder: (_, __, ___) {
-      return BlocProvider(
-        create: (_) {
-          final charactersBloc = serviceProvider<CharactersBloc>();
-          charactersBloc.add(GetCharactersPageEvent());
-          return charactersBloc;
+  static PageRouteBuilder<MainScreen> buildScreen(RouteSettings settings) {
+    return PageRouteBuilder(
+        pageBuilder: (_, __, ___) {
+          return BlocProvider(
+            create: (_) {
+              final charactersBloc = serviceProvider<CharactersBloc>();
+              charactersBloc.add(GetCharactersPageEvent());
+              return charactersBloc;
+            },
+            child: const MainScreen(),
+          );
         },
-        child: const MainScreen(),
-      );
-    }, transitionsBuilder: (_, animation, __, child) {
-      final opacity = animation.drive(Tween<double>(begin: 0, end: 1));
-      return FadeTransition(opacity: opacity, child: child);
-    });
+        transitionsBuilder: (_, animation, __, child) {
+          final opacity = animation.drive(Tween<double>(begin: 0, end: 1));
+          return FadeTransition(opacity: opacity, child: child);
+        },
+        settings: settings);
   }
 
   @override

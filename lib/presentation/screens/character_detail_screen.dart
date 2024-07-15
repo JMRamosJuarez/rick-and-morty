@@ -9,22 +9,26 @@ class CharacterDetailScreen extends StatelessWidget {
   const CharacterDetailScreen({super.key});
 
   static PageRouteBuilder<CharacterDetailScreen> buildScreen(
-      RouteSettings route) {
-    return PageRouteBuilder(pageBuilder: (_, __, ___) {
-      final characterId = route.arguments as int;
-      return BlocProvider(
-        create: (_) {
-          final characterDetailsBloc = serviceProvider<CharacterDetailsBloc>();
-          characterDetailsBloc.add(GetCharacterEvent(id: characterId));
-          return characterDetailsBloc;
+      RouteSettings settings) {
+    return PageRouteBuilder(
+        pageBuilder: (_, __, ___) {
+          final characterId = settings.arguments as int;
+          return BlocProvider(
+            create: (_) {
+              final characterDetailsBloc =
+                  serviceProvider<CharacterDetailsBloc>();
+              characterDetailsBloc.add(GetCharacterEvent(id: characterId));
+              return characterDetailsBloc;
+            },
+            child: const CharacterDetailScreen(),
+          );
         },
-        child: const CharacterDetailScreen(),
-      );
-    }, transitionsBuilder: (_, animation, __, child) {
-      final position = animation.drive(
-          Tween<Offset>(begin: const Offset(1, 0), end: const Offset(0, 0)));
-      return SlideTransition(position: position, child: child);
-    });
+        transitionsBuilder: (_, animation, __, child) {
+          final position = animation.drive(Tween<Offset>(
+              begin: const Offset(1, 0), end: const Offset(0, 0)));
+          return SlideTransition(position: position, child: child);
+        },
+        settings: settings);
   }
 
   @override
