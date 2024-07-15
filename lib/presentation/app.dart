@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:rick_and_morty/presentation/blocs/most_recent_characters/most_recent_characters_bloc.dart';
 import 'package:rick_and_morty/presentation/di/index.dart';
 import 'package:rick_and_morty/presentation/screens/character_detail_screen.dart';

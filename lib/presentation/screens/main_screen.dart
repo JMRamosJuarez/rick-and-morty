@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:rick_and_morty/domain/entities/character.dart';
 import 'package:rick_and_morty/presentation/blocs/characters/characters_bloc.dart';
 import 'package:rick_and_morty/presentation/di/index.dart';
@@ -28,6 +29,13 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeWidget.widgetClicked.listen((Uri? uri) {
+      final params = uri?.queryParameters ?? {};
+
+      final id = int.parse(params['characterId'] ?? '1');
+
+      Navigator.of(context).pushNamed('/character', arguments: id);
+    });
     return Scaffold(
         body: SafeArea(
       child: BlocSelector<CharactersBloc, PaginationState, List<Character>>(
@@ -58,6 +66,16 @@ class MainScreen extends StatelessWidget {
                         return CharacterListItem(
                           item: item,
                           onPress: (character) {
+                            HomeWidget.saveWidgetData("id", item.id);
+                            HomeWidget.renderFlutterWidget(
+                                Image.network(
+                                  item.image,
+                                  width: 40,
+                                  height: 40,
+                                ),
+                                key: 'image',
+                                logicalSize: const Size(40, 40));
+                            HomeWidget.saveWidgetData("name", item.name);
                             Navigator.of(context)
                                 .pushNamed('/character', arguments: item.id);
                           },
