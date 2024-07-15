@@ -16,6 +16,8 @@ class MostRecentCharacters extends StatelessWidget {
           builder: (_, state) {
             switch (state) {
               case RecentCharactersSuccess():
+                // We can return a different view based on each type of state
+                // but at this point we only care about the [RecentCharactersSuccess] state
                 if (state.characters.isEmpty) {
                   return const SizedBox(
                     height: 40,
@@ -44,6 +46,7 @@ class MostRecentCharacters extends StatelessWidget {
                       }),
                 );
               default:
+                //Return placeholder text by default
                 return const SizedBox(
                   height: 40,
                   child: Center(child: Text('You have 0 recent characters')),
