@@ -55,7 +55,10 @@ class MainScreen extends StatelessWidget {
                         final item = characters[index];
                         return CharacterListItem(
                           item: item,
-                          onPress: (character) {},
+                          onPress: (character) {
+                            Navigator.of(context)
+                                .pushNamed('/character', arguments: item.id);
+                          },
                         );
                       }),
                 ),

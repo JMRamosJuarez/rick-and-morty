@@ -10,6 +10,7 @@ import 'package:rick_and_morty/domain/access/app_http_client.dart';
 import 'package:rick_and_morty/domain/di/components/rick_and_morty_component.dart';
 import 'package:rick_and_morty/domain/di/modules/rick_and_morty_module.dart';
 import 'package:rick_and_morty/presentation/blocs/characters/characters_bloc.dart';
+import 'package:rick_and_morty/presentation/blocs/details/character_details_bloc.dart';
 import 'package:sqflite/sqflite.dart';
 
 final serviceProvider = GetIt.instance;
@@ -48,4 +49,7 @@ void initDependencies() {
 
   serviceProvider.registerFactory<CharactersBloc>(
       () => CharactersBloc(rickAndMortyComponent: serviceProvider()));
+
+  serviceProvider.registerFactory<CharacterDetailsBloc>(
+      () => CharacterDetailsBloc(rickAndMortyComponent: serviceProvider()));
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rick_and_morty/presentation/screens/character_detail_screen.dart';
 import 'package:rick_and_morty/presentation/screens/main_screen.dart';
 
 class App extends StatelessWidget {
@@ -12,6 +13,8 @@ class App extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MainScreen.buildScreen(settings);
+          case '/character':
+            return CharacterDetailScreen.buildScreen(settings);
           default:
             throw Exception("Route not found");
         }
