@@ -16,6 +16,21 @@ import 'package:sqflite/sqflite.dart';
 
 final serviceProvider = GetIt.instance;
 
+/// Init app dependencies.
+///
+/// [AppDbClient] generates a lazy singleton using [AppDbClientImpl]
+///
+/// [AppHttpClient] generates a lazy singleton using [AppHttpClientImpl]
+///
+/// [RickAndMortyModule] generates a lazy singleton using [RickAndMortyModuleImpl]
+///
+/// [RickAndMortyComponentImpl] generates a lazy singleton using [RickAndMortyComponentImpl]
+///
+/// [MostRecentCharactersBloc] is registered as a factory because it's a [Bloc] and the [BlocProvider] disposes each instance automatically
+///
+/// [CharactersBloc] is registered as a factory because it's a [Bloc] and the [BlocProvider] disposes each instance automatically
+///
+/// [CharacterDetailsBloc] is registered as a factory because it's a [Bloc] and the [BlocProvider] disposes each instance automatically
 void initDependencies() {
   serviceProvider.registerLazySingleton<AppDbClient>(() {
     Future<Database> dbClient() async {
