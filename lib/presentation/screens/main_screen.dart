@@ -14,14 +14,13 @@ class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
   /// Returns [PageRouteBuilder] that contains [BlocProvider<CharactersBloc>] >> [MainScreen]
-  ///
-  /// The [transitionsBuilder] method returns a [FadeTransition] for the screen.
   static PageRouteBuilder<MainScreen> buildScreen(RouteSettings settings) {
     return PageRouteBuilder(
         pageBuilder: (_, __, ___) {
           return BlocProvider(
             create: (_) {
               final charactersBloc = serviceProvider<CharactersBloc>();
+              // Execute the [GetCharactersPageEvent] when the bloc is created to load the first page.
               charactersBloc.add(GetCharactersPageEvent());
               return charactersBloc;
             },
@@ -29,7 +28,9 @@ class MainScreen extends StatefulWidget {
           );
         },
         transitionsBuilder: (_, animation, __, child) {
-          final opacity = animation.drive(Tween<double>(begin: 0, end: 1));
+          /// Returns a [FadeTransition] for the screen.
+          final tween = Tween<double>(begin: 0, end: 1);
+          final opacity = animation.drive(tween);
           return FadeTransition(opacity: opacity, child: child);
         },
         settings: settings);

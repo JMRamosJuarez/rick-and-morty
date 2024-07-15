@@ -9,8 +9,6 @@ class CharacterDetailScreen extends StatelessWidget {
   const CharacterDetailScreen({super.key});
 
   /// Returns [PageRouteBuilder] that contains [BlocProvider<CharacterDetailsBloc>] >> [CharacterDetailScreen]
-  ///
-  /// The [transitionsBuilder] method returns a [SlideTransition] to display the screen from Right to Left.
   static PageRouteBuilder<CharacterDetailScreen> buildScreen(
       RouteSettings settings) {
     return PageRouteBuilder(
@@ -20,6 +18,7 @@ class CharacterDetailScreen extends StatelessWidget {
             create: (_) {
               final characterDetailsBloc =
                   serviceProvider<CharacterDetailsBloc>();
+              // Execute the [GetCharacterEvent] when the bloc is created
               characterDetailsBloc.add(GetCharacterEvent(id: characterId));
               return characterDetailsBloc;
             },
@@ -27,8 +26,10 @@ class CharacterDetailScreen extends StatelessWidget {
           );
         },
         transitionsBuilder: (_, animation, __, child) {
-          final position = animation.drive(Tween<Offset>(
-              begin: const Offset(1, 0), end: const Offset(0, 0)));
+          // Returns a [SlideTransition] to display the screen from Right to Left.
+          final tween =
+              Tween<Offset>(begin: const Offset(1, 0), end: const Offset(0, 0));
+          final position = animation.drive(tween);
           return SlideTransition(position: position, child: child);
         },
         settings: settings);
