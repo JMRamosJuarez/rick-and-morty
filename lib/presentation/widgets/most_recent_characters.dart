@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty/presentation/blocs/most_recent_characters/most_recent_characters_bloc.dart';
+import 'package:rick_and_morty/presentation/widgets/most_recent_character_item.dart';
 
 class MostRecentCharacters extends StatelessWidget {
   const MostRecentCharacters({super.key});
@@ -22,26 +23,18 @@ class MostRecentCharacters extends StatelessWidget {
                       itemCount: state.characters.length,
                       itemBuilder: (_, index) {
                         final item = state.characters[index];
-                        return InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, "/detail",
-                                arguments: item.id);
-                          },
-                          onLongPress: () {
-                            final bloc =
-                                context.read<MostRecentCharactersBloc>();
-                            bloc.add(DeleteRecentCharacterEvent(
-                                id: item.id, limit: 10));
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.network(
-                              item.image,
-                              width: 40,
-                              height: 40,
-                            ),
-                          ),
-                        );
+                        return MostRecentCharacterItem(
+                            character: item,
+                            onPress: (character) {
+                              Navigator.of(context).pushNamed('/character',
+                                  arguments: character.id);
+                            },
+                            onDelete: (character) {
+                              final bloc =
+                                  context.read<MostRecentCharactersBloc>();
+                              bloc.add(DeleteRecentCharacterEvent(
+                                  id: character.id, limit: 10));
+                            });
                       }),
                 );
               default:
