@@ -51,5 +51,20 @@ class CharactersBloc extends Bloc<CharactersEvent, PaginationState> {
             data: PageDataState(info: page.info, characters: characters)));
       });
     });
+
+    on<SearchCharacterEvent>((event, emit) async {
+      emit(state.copyWith(page: PageLoading()));
+
+      final response =
+          await _rickAndMortyComponent.searchCharacterUseCase(event.name);
+
+      response.fold(
+          (error) => {emit(state.copyWith(page: PageError(error: error)))},
+          (page) {
+        emit(PaginationState(
+            page: PageSuccess(characters: page.results),
+            data: PageDataState(info: page.info, characters: page.results)));
+      });
+    });
   }
 }
