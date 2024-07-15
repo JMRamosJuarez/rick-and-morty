@@ -8,6 +8,9 @@ import 'package:rick_and_morty/presentation/di/index.dart';
 class CharacterDetailScreen extends StatelessWidget {
   const CharacterDetailScreen({super.key});
 
+  /// Returns [PageRouteBuilder] that contains [BlocProvider<CharacterDetailsBloc>] >> [CharacterDetailScreen]
+  ///
+  /// The [transitionsBuilder] method returns a [SlideTransition] to display the screen from Right to Left.
   static PageRouteBuilder<CharacterDetailScreen> buildScreen(
       RouteSettings settings) {
     return PageRouteBuilder(
@@ -39,16 +42,15 @@ class CharacterDetailScreen extends StatelessWidget {
         child: BlocConsumer<CharacterDetailsBloc, CharacterDetailsState>(
           listener: (_, state) {
             if (state is CharacterSuccess) {
+              // Update the [MostRecentCharacters] widget when the [CharacterSuccess] state it's emmited
               final bloc = context.read<MostRecentCharactersBloc>();
               bloc.add(GetMostRecentCharactersEvent(limit: 10));
             }
           },
           builder: (_, state) {
             switch (state) {
-              case CharacterWaiting():
-              case CharacterLoading():
-              case CharacterError():
-                return const Column();
+              // We can return a different view based on each type of state
+              // but at this point we only care about the [CharacterSuccess] state
               case CharacterSuccess():
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -103,6 +105,9 @@ class CharacterDetailScreen extends StatelessWidget {
                         child: const Text("Set as home widget"))
                   ],
                 );
+              default:
+                //Return an empty column by default
+                return const Column();
             }
           },
         ),
