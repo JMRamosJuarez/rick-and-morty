@@ -73,6 +73,7 @@ class _MainScreenState extends State<MainScreen> {
         body: SafeArea(
       child: BlocSelector<CharactersBloc, PaginationState, List<Character>>(
         selector: (state) {
+          // At this point we only care about the list of [characters] not the pagination state itself.
           return state.data.characters;
         },
         builder: (_, characters) {
@@ -85,6 +86,7 @@ class _MainScreenState extends State<MainScreen> {
                   onNotification: (scrollInfo) {
                     if (scrollInfo.metrics.pixels ==
                         scrollInfo.metrics.maxScrollExtent) {
+                      // Load the next page when the scroll hits the bottom
                       context
                           .read<CharactersBloc>()
                           .add(GetCharactersPageEvent());
