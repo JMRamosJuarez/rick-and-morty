@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty/presentation/blocs/details/character_details_bloc.dart';
 import 'package:rick_and_morty/presentation/blocs/most_recent_characters/most_recent_characters_bloc.dart';
 import 'package:rick_and_morty/presentation/di/index.dart';
-import 'package:rick_and_morty/presentation/widgets/most_recent_characters.dart';
 
 class CharacterDetailScreen extends StatelessWidget {
   const CharacterDetailScreen({super.key});
