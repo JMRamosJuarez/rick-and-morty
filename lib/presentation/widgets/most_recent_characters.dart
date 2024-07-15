@@ -16,6 +16,12 @@ class MostRecentCharacters extends StatelessWidget {
           builder: (_, state) {
             switch (state) {
               case RecentCharactersSuccess():
+                if (state.characters.isEmpty) {
+                  return const SizedBox(
+                    height: 40,
+                    child: Center(child: Text('You have 0 recent characters')),
+                  );
+                }
                 return SizedBox(
                   height: 40,
                   child: ListView.builder(
