@@ -25,6 +25,8 @@ class _SearchCharacterTextFieldState extends State<SearchCharacterTextField> {
         decoration: const InputDecoration(
             border: OutlineInputBorder(), labelText: "Search"),
         onChanged: (name) => _debouncer(() {
+          // The debouncer prevents multiple executions of the [SearchCharacterEvent] in a range of 750 millisecons
+          // while the user is typing.
           bloc.add(SearchCharacterEvent(name: name));
         }),
       ),
